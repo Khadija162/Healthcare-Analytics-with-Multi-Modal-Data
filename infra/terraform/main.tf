@@ -1,11 +1,17 @@
 terraform {
   required_version = ">= 1.6"
   required_providers {
-    azurerm = { source = "hashicorp/azurerm", version = "~> 4.0" }
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "~> 4.0"
+    }
   }
 }
 variable "subscription_id" { type = string }
-variable "location" { type = string, default = "northeurope" }
+variable "location" {
+  type = string
+  default = "northeurope"
+}
 variable "storage_name" { type = string }
 provider "azurerm" {
   features {}
