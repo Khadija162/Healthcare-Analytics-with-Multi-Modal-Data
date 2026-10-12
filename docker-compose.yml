@@ -1,0 +1,17 @@
+services:
+  api:
+    build: .
+    ports: ["127.0.0.1:8000:8000"]
+    environment:
+      MODEL_PATH: /app/artifacts/heart_model.joblib
+      VLM_MODE: metadata
+    volumes:
+      - ./artifacts:/app/artifacts:ro
+  dashboard:
+    build: .
+    command: ["streamlit","run","dashboard/app.py","--server.address","0.0.0.0","--server.port","8501"]
+    ports: ["127.0.0.1:8501:8501"]
+    environment: {API_URL: "http://api:8000"}
+    depends_on: [api]
+    volumes:
+      - ./data/gold:/app/data/gold:ro
